@@ -16,7 +16,8 @@ public class TLoaded {
         try {
             File file = new File(url.getFile());
             jsonString = Files.toString(file, Charsets.UTF_8);
-        } catch(Exception e) {
+        }
+        catch(Exception e) {
             return null;
         }
 

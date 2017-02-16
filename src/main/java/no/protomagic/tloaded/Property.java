@@ -27,17 +27,52 @@ public class Property {
 
     public Type type;
 
-    public String value;
+    public String strVal;
+    public int intVal;
+    public float floatVal;
+    public boolean boolVal;
 
     public Property() {}
 
-    Property(JSONObject propData) {
-        name = JSONHelper.readString(propData, "name");
-        type = Type.parse(JSONHelper.readString(propData, "type"));
-        value = JSONHelper.readString(propData, "value");
-        if(value == null) {
-            value = Float.toString(JSONHelper.readFloat(propData, "value"));
+    Property(Object propData) {
+        if(propData == null) return;
+
+        if(propData instanceof Number) {
+            Number num = (Number)propData;
+            if(num.floatValue() == num.intValue()) {
+                type = Type.INT;
+                intVal = num.intValue();
+            }
+            else {
+                type = Type.FLOAT;
+                floatVal = num.floatValue();
+            }
         }
+        else if(propData instanceof Boolean) {
+            type = Type.BOOL;
+            boolVal = (Boolean)propData;
+        }
+        else if(propData instanceof String) {
+            // TODO: Differentiate between color, file and string
+            type = Type.STRING;
+            strVal = (String)propData;
+        }
+    }
+
+    @Override
+    public String toString() {
+        String output = type.toString() + ": ";
+
+        switch(type) {
+            case BOOL: output += boolVal; break;
+            case FLOAT: output += floatVal; break;
+            case INT: output += intVal; break;
+            case STRING: output += strVal; break;
+            case COLOR: output += strVal; break;
+            case FILE: output += strVal; break;
+        }
+
+        return output;
     }
 }
 

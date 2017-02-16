@@ -1,5 +1,6 @@
 package no.protomagic.tloaded;
 
+import java.util.HashMap;
 import org.json.simple.*;
 
 public class TileMap {
@@ -23,7 +24,7 @@ public class TileMap {
 
     public String backgroundColor;
 
-    public Property[] properties;
+    public HashMap<String, Property> properties;
 
     void load(JSONObject mapObj) {
         version = JSONHelper.readInt(mapObj, "version");
@@ -53,11 +54,11 @@ public class TileMap {
 
         backgroundColor = JSONHelper.readString(mapObj, "backgroundcolor");
 
-        JSONArray propertiesData = JSONHelper.readArray(mapObj, "properties");
+        JSONObject propertiesData = JSONHelper.readObject(mapObj, "properties");
         if(propertiesData != null) {
-            properties = new Property[propertiesData.size()];
-            for(int i=0; i<properties.length; ++i) {
-                properties[i] = new Property((JSONObject)propertiesData.get(i));
+            properties = new HashMap<>();
+            for(Object o : propertiesData.keySet()) {
+                properties.put((String)o, new Property(propertiesData.get(o)));
             }
         }
     }

@@ -30,3 +30,9 @@ test {
   testLogging.showStandardStreams = true
 }
 
+task copyTestResources(type: Copy) {
+    from "${projectDir}/src/test/resources"
+    into "${buildDir}/classes/test"
+}
+test.dependsOn copyTestResources
+

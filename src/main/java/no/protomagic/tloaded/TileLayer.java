@@ -1,5 +1,6 @@
 package no.protomagic.tloaded;
 
+import java.util.HashMap;
 import org.json.simple.*;
 
 public class TileLayer {
@@ -20,7 +21,7 @@ public class TileLayer {
 
     public int[] data;
 
-    public Property[] properties;
+    public HashMap<String, Property> properties;
 
     public TileLayer() {}
 
@@ -48,11 +49,11 @@ public class TileLayer {
             data[i] = ((Number)dataJSON.get(i)).intValue();
         }
 
-        JSONArray propertiesData = JSONHelper.readArray(layerData, "properties");
+        JSONObject propertiesData = JSONHelper.readObject(layerData, "properties");
         if(propertiesData != null) {
-            properties = new Property[propertiesData.size()];
-            for(int i=0; i<properties.length; ++i) {
-                properties[i] = new Property((JSONObject)propertiesData.get(i));
+            properties = new HashMap<>();
+            for(Object o : propertiesData.keySet()) {
+                properties.put((String)o, new Property(propertiesData.get(o)));
             }
         }
     }
