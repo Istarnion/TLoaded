@@ -13,6 +13,12 @@ public class TLoadedTest {
 
         TileMap map = TLoaded.loadTileMap(url);
         assertNotNull(map);
+
+        assertTrue(map.layers.length == 2);
+        assertTrue(map.layers[0].height == map.height);
+        assertTrue(map.layers[0].data.length == map.width * map.height);
+        assertTrue(map.nextObjectID == 1);
+        assertTrue(map.tileSets[0].name.equals("gloomdungeon"));
     }
 }
 
