@@ -10,13 +10,14 @@ public class TLoaded {
 
     private TLoaded() {}
 
-    public static TileMap loadTileMap(URL url) {
+    public static TileMap loadTileMap(String path) {
         String jsonString;
 
         try {
-            File file = new File(url.getFile());
+            File file = new File(path);
             jsonString = Files.toString(file, Charsets.UTF_8);
         }
+
         catch(Exception e) {
             return null;
         }

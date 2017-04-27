@@ -8,10 +8,10 @@ public class TLoadedTest {
 
     @Test
     public void testLoadMap() {
-        URL url = TLoadedTest.class.getClassLoader().getResource("testMap.json");
-        assertNotNull(url);
+        String file = TLoadedTest.class.getClassLoader().getResource("testMap.json").getFile();
+        assertNotNull(file);
 
-        TileMap map = TLoaded.loadTileMap(url);
+        TileMap map = TLoaded.loadTileMap(file);
         assertNotNull(map);
 
         assertTrue(map.layers.length == 3);
