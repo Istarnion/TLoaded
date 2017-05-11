@@ -9,23 +9,8 @@ public class TLoaded {
 
     private TLoaded() {}
 
-    public static TileMap loadTileMap(String path) {
-        String jsonString;
-
-        try(BufferedReader br = new BufferedReader(
-                    new InputStreamReader(TLoaded.class
-                    .getClassLoader()
-                    .getResourceAsStream(path)))) {
-
-            StringBuilder builder = new StringBuilder();
-            br.lines().forEach(line -> builder.append(line));
-            jsonString = builder.toString();
-        }
-        catch(Exception e) {
-            return null;
-        }
-
-        Object mapObject = JSONValue.parse(jsonString);
+    public static TileMap loadTileMap(String json) {
+        Object mapObject = JSONValue.parse(json);
         if(mapObject != null && mapObject instanceof JSONObject) {
             TileMap map = new TileMap();
             map.load((JSONObject)mapObject);

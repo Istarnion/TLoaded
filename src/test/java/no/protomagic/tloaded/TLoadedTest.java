@@ -2,13 +2,33 @@ package no.protomagic.tloaded;
 
 import java.net.URL;
 import org.junit.Test;
+import java.io.*;
 import static org.junit.Assert.*;
 
 public class TLoadedTest {
 
+    private String readFile(String path) {
+        String fileContents = null;
+
+        try(BufferedReader br = new BufferedReader(
+                    new InputStreamReader(
+                        TLoadedTest.class.getClassLoader().
+                        getResourceAsStream(path)))) {
+
+            StringBuilder builder = new StringBuilder();
+            br.lines().forEach(line -> builder.append(line));
+            fileContents = builder.toString();
+        }
+        catch(IOException e) {
+            assertTrue(false);
+        }
+
+        return fileContents;
+    }
+
     @Test
     public void testLoadMap() {
-        String file = "testMap.json";
+        String file = readFile("testMap.json");
 
         TileMap map = TLoaded.loadTileMap(file);
         assertNotNull(map);
