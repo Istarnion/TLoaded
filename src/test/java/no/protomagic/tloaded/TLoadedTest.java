@@ -8,8 +8,7 @@ public class TLoadedTest {
 
     @Test
     public void testLoadMap() {
-        String file = TLoadedTest.class.getClassLoader().getResource("testMap.json").getFile();
-        assertNotNull(file);
+        String file = "testMap.json";
 
         TileMap map = TLoaded.loadTileMap(file);
         assertNotNull(map);

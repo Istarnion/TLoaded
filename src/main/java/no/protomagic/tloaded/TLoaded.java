@@ -1,9 +1,8 @@
 package no.protomagic.tloaded;
 
 import java.net.URL;
-import java.io.File;
+import java.io.*;
 import org.json.simple.*;
-import com.google.common.io.Files;
 import com.google.common.base.Charsets;
 
 public class TLoaded {
@@ -13,11 +12,15 @@ public class TLoaded {
     public static TileMap loadTileMap(String path) {
         String jsonString;
 
-        try {
-            File file = new File(path);
-            jsonString = Files.toString(file, Charsets.UTF_8);
-        }
+        try(BufferedReader br = new BufferedReader(
+                    new InputStreamReader(TLoaded.class
+                    .getClassLoader()
+                    .getResourceAsStream(path)))) {
 
+            StringBuilder builder = new StringBuilder();
+            br.lines().forEach(line -> builder.append(line));
+            jsonString = builder.toString();
+        }
         catch(Exception e) {
             return null;
         }
