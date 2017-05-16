@@ -28,7 +28,7 @@ public class TLoadedTest {
 
     @Test
     public void testLoadMap() {
-        String file = readFile("testMap.json");
+        String file = readFile("testmap.json");
 
         TileMap map = TLoaded.loadTileMap(file);
         assertNotNull(map);
